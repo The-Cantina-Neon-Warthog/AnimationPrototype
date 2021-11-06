@@ -5,7 +5,13 @@ import PlaygroundSupport
 
 struct ContentView: View {
     @State private var animationAmount = 1.0
-    @State private var animationColor = Color.red
+    @State private var animationAmountInerCircle1 = 1.0
+    @State private var animationAmountInerCircle2 = 1.0
+    @State private var animationColor = Color.blue
+    
+    let animationTime: Double = 4
+    let delay1: Double = 0.4
+    let delay2: Double = 0.8
     
     var body: some View {
         ZStack {
@@ -16,40 +22,46 @@ struct ContentView: View {
                 .colorMultiply(animationColor)
                 .scaleEffect(animationAmount)
                 .animation(
-                    .easeInOut(duration: 2)
+                    .easeInOut(duration: animationTime)
                         .repeatForever(autoreverses: true),
                     value: animationAmount
                 )
                 .onAppear {
                     animationAmount = 1.61
-                    animationColor = Color.blue
+                    animationColor = Color.red
                 }
             
             // Circle 2
             Circle()
                 .frame(width: 124, height: 124, alignment: .center)
                 .foregroundColor(.white)
-                .opacity(0.62)
-                .scaleEffect(animationAmount)
+                .opacity(0.5)
+                .scaleEffect(animationAmountInerCircle1)
                 .animation(
-                    .easeInOut(duration: 1.8)
-                        .delay(0.2)
+                    .easeInOut(duration: animationTime - delay1)
+                        .delay(delay1)
                         .repeatForever(autoreverses: true),
                     value: animationAmount
                 )
+                .onAppear {
+                    animationAmountInerCircle1 = 2.3
+                }
             
             // Circle 2
             Circle()
-                .frame(width: 77, height: 77, alignment: .center)
+                .frame(width: 48, height: 48, alignment: .center)
                 .foregroundColor(.white)
-                .opacity(0.62)
-                .scaleEffect(animationAmount)
+                .opacity(0.5)
+                .scaleEffect(animationAmountInerCircle2)
                 .animation(
-                    .easeInOut(duration: 1.6)
-                        .delay(0.4)
+                    .easeInOut(duration: animationTime - delay2)
+                        .delay(delay2)
                         .repeatForever(autoreverses: true),
                     value: animationAmount
                 )
+                .onAppear {
+                    animationAmountInerCircle2 = 4.7
+                }
             
         }.frame(width: 400, height: 550, alignment: .center)
     }
